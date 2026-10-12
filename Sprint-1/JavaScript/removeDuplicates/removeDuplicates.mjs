@@ -9,28 +9,21 @@
  * @returns {Array} New sequence with duplicates removed
  */
 export function removeDuplicates(inputSequence) {
-  const uniqueItems = [];
 
-  for (
-    let currentIndex = 0;
-    currentIndex < inputSequence.length;
-    currentIndex++
-  ) {
-    let isDuplicate = false;
-    for (
-      let compareIndex = 0;
-      compareIndex < uniqueItems.length;
-      compareIndex++
-    ) {
-      if (inputSequence[currentIndex] === uniqueItems[compareIndex]) {
-        isDuplicate = true;
-        break;
-      }
-    }
-    if (!isDuplicate) {
-      uniqueItems.push(inputSequence[currentIndex]);
-    }
-  }
+  return [...new Set(inputSequence)]
 
-  return uniqueItems;
 }
+// Original complexity:
+// The original approach typically uses nested loops to compare
+// each value with the remaining values in the sequence.
+// This results in O(n²) time complexity because each value
+// may be compared with every other value.
+
+
+// Refactor:
+// Use a Set to remove duplicate values while preserving the
+// order of their first occurrence.
+// The Set stores only unique values, and spreading the Set
+// into a new array creates the result.
+// Set insertion is O(1) on average, so processing all n
+// elements takes O(n) time overall.
