@@ -1,4 +1,6 @@
 class Node:
+    __slots__ = ("value", "next", "previous")
+
     def __init__(self, value):
         self.value = value
         self.next = None
@@ -12,7 +14,7 @@ class LinkedList:
 
     def push_head(self, item):
         new_node = Node(item)
-        
+
         if not self.head:
             self.head = new_node
             self.tail = new_node
@@ -20,24 +22,18 @@ class LinkedList:
             new_node.next = self.head
             self.head.previous = new_node
             self.head = new_node
-            
+
         return new_node
 
     def pop_tail(self):
         if not self.tail:
-            return None 
-            
+            return None
+
         popped_node = self.tail
         value = popped_node.value
-        
-        if self.head == self.tail:
-            self.head = None
-            self.tail = None
-        else:
-            self.tail = self.tail.previous
-            self.tail.next = None
-            
-        popped_node.previous = None
+
+        self.remove(popped_node)
+
         return value
 
     def remove(self, node: Node):
@@ -49,15 +45,15 @@ class LinkedList:
             if self.head:
                 self.head.previous = None
             else:
-                self.tail = None 
-                
+                self.tail = None
+
         elif node == self.tail:
             self.tail = node.previous
             if self.tail:
                 self.tail.next = None
             else:
-                self.head = None 
-                
+                self.head = None
+
         else:
             node.previous.next = node.next
             node.next.previous = node.previous
