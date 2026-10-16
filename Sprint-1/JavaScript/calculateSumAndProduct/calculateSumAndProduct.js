@@ -9,16 +9,16 @@
  *   "product": 30 // 2 * 3 * 5
  * }
  *
- * Time Complexity:
- * Space Complexity:
- * Optimal Time Complexity:
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ * Optimal Time Complexity: O(n)
  *
  * @param {Array<number>} numbers - Numbers to process
  * @returns {Object} Object containing running total and product
  */
 export function calculateSumAndProduct(numbers) {
   let sum = 0;
-  let product =1
+  let product = 1;
   for (const num of numbers) {
     sum += num;
     product *= num
@@ -28,3 +28,8 @@ export function calculateSumAndProduct(numbers) {
     product: product,
   };
 }
+//Time Complexity: O(n)  The loop visits each element exactly once
+// Space complexity is O(1) he function uses a fixed number of variables, regardless of the input size.
+//  The returned object also has a fixed size.
+// Optimal time complexity is O(n) because every element must be examined
+// to guarantee the correct sum and product.
