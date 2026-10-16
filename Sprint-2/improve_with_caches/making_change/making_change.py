@@ -1,62 +1,53 @@
+
 from typing import List
+
+# Define coin values globally
+COIN_VALUES = [200, 100, 50, 20, 10, 5, 2, 1]
 
 
 def ways_to_make_change(total: int) -> int:
-    coins = [200, 100, 50, 20, 10, 5, 2, 1]
-    cache = {}
+    """
+    Given coin values of 1, 2, 5, 10, 20, 50, 100, and 200,
+    return the number of ways to make the given total.
+    """
+    memo = {}
+    return change_helper(total, 0, memo)
 
-    def helper(remaining: int, coin_index: int) -> int:
-        if remaining == 0:
-            return 1
 
-        if remaining < 0 or coin_index == len(coins):
-            return 0
+def change_helper(amount: int, index: int, memo: dict) -> int:
+    """Helper function to calculate the number of ways."""
 
-        key = (remaining, coin_index)
+    key = (amount, index)
 
-        if key in cache:
-            return cache[key]
+    if key in memo:
+        return memo[key]
 
-        result = (
-            helper(remaining - coins[coin_index], coin_index)
-            + helper(remaining, coin_index + 1)
-        )
+    if amount == 0:
+        return 1
 
-        cache[key] = result
-        return result
-
-    if total < 0:
+    if index >= len(COIN_VALUES):
         return 0
 
-    return helper(total, 0)
+    result = 0
 
+    for position in range(index, len(COIN_VALUES)):
+        value = COIN_VALUES[position]
+        quantity = 1
 
-def ways_to_make_change_helper(total: int, coins: List[int]) -> int:
-    cache = {}
+        while value * quantity <= amount:
+            current_sum = value * quantity
 
-    def helper(remaining: int, coin_index: int) -> int:
-        if remaining == 0:
-            return 1
+            if current_sum == amount:
+                result += 1
+            else:
+                remaining = change_helper(
+                    amount - current_sum,
+                    position + 1,
+                    memo
+                )
+                result += remaining
 
-        if remaining < 0 or coin_index == len(coins):
-            return 0
+            quantity += 1
 
-        key = (remaining, coin_index)
-
-        if key in cache:
-            return cache[key]
-
-        result = (
-            helper(remaining - coins[coin_index], coin_index)
-            + helper(remaining, coin_index + 1)
-        )
-
-        cache[key] = result
-        return result
-
-
-
-    if total < 0:
-        return 0
-
-    return helper(total, 0)
+    memo[key] = result
+    return result
