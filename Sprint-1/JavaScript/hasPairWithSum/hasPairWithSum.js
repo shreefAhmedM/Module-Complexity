@@ -26,3 +26,7 @@ export function hasPairWithSum(numbers, target) {
   return false;
 
 }
+
+
+// Time Complexity: O(n) We check each number once.
+// Space Complexity: O(n) The Set may store all n numbers.
